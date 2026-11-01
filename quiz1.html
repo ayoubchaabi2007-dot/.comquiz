@@ -1,0 +1,917 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La communication - Introduction et Quiz</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #101d3b, #304f86);
+    color: #263650;
+    min-height: 100vh;
+    padding: 25px 15px;
+}
+
+.container {
+    max-width: 850px;
+    margin: 0 auto;
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px #0003;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+header h1 {
+    color: #1c3970;
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+header p {
+    color: #68748a;
+    line-height: 1.7;
+}
+
+.badge {
+    display: inline-block;
+    background: #e8efff;
+    color: #2455a3;
+    padding: 8px 14px;
+    border-radius: 25px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 18px;
+}
+
+h2 {
+    color: #1c3970;
+    margin-bottom: 15px;
+}
+
+.intro p {
+    line-height: 1.8;
+    margin-bottom: 17px;
+}
+
+.intro h3 {
+    color: #2455a3;
+    margin: 23px 0 12px;
+}
+
+.definition {
+    background: #edf3ff;
+    padding: 20px;
+    border-left: 5px solid #3478f6;
+    border-radius: 10px;
+    line-height: 1.8;
+    margin: 20px 0;
+}
+
+.topics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 18px 0 25px;
+}
+
+.topic {
+    background: #f4f6fa;
+    border: 1px solid #e0e7f2;
+    padding: 17px;
+    border-radius: 12px;
+}
+
+.topic h3 {
+    color: #2455a3;
+    font-size: 16px;
+    margin: 0 0 9px;
+}
+
+.topic p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.main-btn {
+    background: #245bd4;
+    color: white;
+    border: none;
+    padding: 14px 22px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.main-btn:hover {
+    background: #1745a7;
+}
+
+.main-btn:disabled {
+    background: #b2bfd3;
+    cursor: not-allowed;
+}
+
+.start {
+    width: 100%;
+    margin-top: 8px;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 14px;
+    color: #68748a;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    height: 9px;
+    background: #e6eaf1;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.progress {
+    width: 0;
+    height: 100%;
+    background: #3478f6;
+    transition: width 0.3s;
+}
+
+.question {
+    font-size: 21px;
+    line-height: 1.5;
+    margin: 20px 0;
+}
+
+.options {
+    display: grid;
+    gap: 12px;
+}
+
+.option {
+    width: 100%;
+    text-align: left;
+    padding: 16px;
+    border: 2px solid #e0e6ef;
+    border-radius: 12px;
+    background: white;
+    color: #273650;
+    font-size: 15px;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.option:hover:not(:disabled) {
+    border-color: #3478f6;
+    background: #f4f7ff;
+}
+
+.option:disabled {
+    cursor: default;
+    opacity: 1;
+}
+
+.option.correct {
+    background: #e5f8ec;
+    border-color: #239451;
+}
+
+.option.wrong {
+    background: #ffebeb;
+    border-color: #d83b45;
+}
+
+.feedback {
+    display: none;
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 12px;
+    line-height: 1.7;
+}
+
+.feedback.show {
+    display: block;
+}
+
+.feedback.good {
+    background: #e5f8ec;
+    color: #176a36;
+}
+
+.feedback.bad {
+    background: #fff1e4;
+    color: #874512;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+#prevBtn {
+    background: #e9edf5;
+    color: #263957;
+}
+
+#prevBtn:hover:not(:disabled) {
+    background: #dbe3f0;
+}
+
+.result {
+    display: none;
+    text-align: center;
+    line-height: 1.8;
+}
+
+.result h2 {
+    font-size: 29px;
+}
+
+.score {
+    font-size: 52px;
+    font-weight: bold;
+    color: #245bd4;
+    margin: 15px 0;
+}
+
+.review {
+    text-align: left;
+    margin-top: 28px;
+}
+
+.review-item {
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    background: #f1f4f9;
+    line-height: 1.7;
+}
+
+.review-item strong {
+    display: block;
+    margin-bottom: 7px;
+}
+
+footer {
+    text-align: center;
+    color: #8993a6;
+    font-size: 12px;
+    margin-top: 28px;
+}
+
+@media (max-width: 550px) {
+    .container {
+        padding: 22px 17px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    .topics {
+        grid-template-columns: 1fr;
+    }
+
+    .question {
+        font-size: 18px;
+    }
+
+    .actions {
+        flex-wrap: wrap;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+    <div class="badge">PROJET UNIVERSITAIRE</div>
+    <h1>Les fonctions de la communication</h1>
+    <p>Introduction générale et quiz interactif</p>
+</header>
+
+<!-- PAGE D'INTRODUCTION -->
+<section id="intro" class="intro">
+
+    <h2>Introduction : qu'est-ce que la communication ?</h2>
+
+    <p>
+        La communication est un processus qui permet à une personne,
+        un groupe ou une organisation de transmettre des informations,
+        des idées, des opinions ou des émotions à un destinataire.
+        Elle joue un rôle essentiel dans la vie quotidienne, les relations
+        sociales, les entreprises et les institutions.
+    </p>
+
+    <div class="definition">
+        <strong>Définition :</strong><br>
+        La communication est un processus d'échange et de transmission
+        d'un message entre un émetteur et un récepteur, à travers un
+        canal, dans un contexte donné, avec ou sans retour d'information.
+    </div>
+
+    <h3>Les éléments essentiels de la communication</h3>
+
+    <p>
+        <strong>1. L'émetteur :</strong> la personne ou l'organisation
+        qui envoie le message.
+    </p>
+
+    <p>
+        <strong>2. Le récepteur :</strong> la personne ou le public
+        qui reçoit le message.
+    </p>
+
+    <p>
+        <strong>3. Le message :</strong> l'information ou l'idée transmise.
+    </p>
+
+    <p>
+        <strong>4. Le canal :</strong> le moyen utilisé, comme la parole,
+        la télévision, un journal ou les réseaux sociaux.
+    </p>
+
+    <p>
+        <strong>5. Le retour d'information :</strong> la réaction du
+        récepteur, qui permet parfois à l'émetteur de savoir si le message
+        a été compris.
+    </p>
+
+    <h3>Les quatre thèmes de notre quiz</h3>
+
+    <div class="topics">
+        <div class="topic">
+            <h3>1. Communication de crise</h3>
+            <p>
+                Elle permet de gérer une situation grave, d'informer
+                rapidement le public et de préserver la confiance.
+            </p>
+        </div>
+
+        <div class="topic">
+            <h3>2. Communication politique</h3>
+            <p>
+                Elle concerne la transmission des idées politiques,
+                les décisions publiques et les relations avec les citoyens.
+            </p>
+        </div>
+
+        <div class="topic">
+            <h3>3. Communication électorale</h3>
+            <p>
+                Elle permet aux candidats de présenter leurs programmes
+                et de convaincre les électeurs pendant une campagne.
+            </p>
+        </div>
+
+        <div class="topic">
+            <h3>4. Communication de masse</h3>
+            <p>
+                Elle consiste à diffuser des messages à un public
+                nombreux à travers la télévision, la radio, la presse
+                ou les médias numériques.
+            </p>
+        </div>
+    </div>
+
+    <div class="definition">
+        <strong>Objectif du quiz :</strong><br>
+        Vérifier les connaissances sur les notions essentielles,
+        les objectifs, les moyens et les exemples des quatre formes
+        de communication.
+        <br><br>
+        <strong>20 questions · 4 choix par question · 1 bonne réponse.</strong>
+    </div>
+
+    <button class="main-btn start" onclick="startQuiz()">
+        Commencer le quiz →
+    </button>
+</section>
+
+<!-- PAGE DU QUIZ -->
+<section id="quizArea" style="display:none">
+
+    <div class="progress-info">
+        <span id="questionNumber">Question 1 / 20</span>
+        <span id="currentScore">Score : 0</span>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <div class="badge" id="category"></div>
+
+    <h2 class="question" id="question"></h2>
+
+    <div class="options" id="options"></div>
+
+    <div class="feedback" id="feedback" aria-live="polite"></div>
+
+    <div class="actions">
+        <button class="main-btn" id="prevBtn"
+                onclick="previousQuestion()" disabled>
+            ← Précédent
+        </button>
+
+        <button class="main-btn" id="nextBtn"
+                onclick="nextQuestion()" disabled>
+            Suivant →
+        </button>
+    </div>
+</section>
+
+<!-- PAGE DES RESULTATS -->
+<section id="result" class="result" aria-live="polite">
+    <h2>Quiz terminé !</h2>
+    <p>Voici ton résultat final :</p>
+
+    <div class="score" id="finalScore">0 / 20</div>
+    <p id="percentage"></p>
+    <p id="message"></p>
+
+    <button class="main-btn" onclick="restartQuiz()">
+        Recommencer le quiz
+    </button>
+
+    <div class="review">
+        <h2>Correction des réponses</h2>
+        <div id="reviewList"></div>
+    </div>
+</section>
+
+<footer>
+    Projet : Les fonctions de la communication
+</footer>
+
+</div>
+
+<script>
+const questions = [
+    // COMMUNICATION DE CRISE : 5 QUESTIONS
+    {
+        category: "Communication de crise",
+        question: "1. Qu'est-ce que la communication de crise ?",
+        options: [
+            "Une méthode de vente de produits",
+            "Une stratégie pour informer et gérer une situation grave",
+            "Une technique de divertissement",
+            "Une méthode de recrutement"
+        ],
+        answer: 1,
+        explanation: "Elle permet de transmettre des informations fiables et de gérer les conséquences d'une crise."
+    },
+    {
+        category: "Communication de crise",
+        question: "2. Quel est l'objectif prioritaire lorsqu'une crise menace la sécurité des personnes ?",
+        options: [
+            "Augmenter les ventes",
+            "Préparer une publicité",
+            "Protéger les personnes et transmettre les consignes utiles",
+            "Éviter toute communication"
+        ],
+        answer: 2,
+        explanation: "La sécurité des personnes et la transmission des consignes nécessaires sont prioritaires."
+    },
+    {
+        category: "Communication de crise",
+        question: "3. Quel outil aide une organisation à anticiper une crise ?",
+        options: [
+            "Un plan de communication de crise",
+            "Un catalogue de produits",
+            "Une affiche commerciale",
+            "Un programme de fidélité"
+        ],
+        answer: 0,
+        explanation: "Ce plan prévoit les responsabilités, les messages et les moyens de communication."
+    },
+    {
+        category: "Communication de crise",
+        question: "4. Pourquoi faut-il vérifier les informations avant de les diffuser ?",
+        options: [
+            "Pour retarder toutes les annonces",
+            "Pour éviter de répondre au public",
+            "Pour rendre le message plus compliqué",
+            "Pour limiter les erreurs et les fausses informations"
+        ],
+        answer: 3,
+        explanation: "La vérification permet de limiter les erreurs et de préserver la crédibilité."
+    },
+    {
+        category: "Communication de crise",
+        question: "5. Que doit faire une organisation après une crise ?",
+        options: [
+            "Oublier les événements",
+            "Évaluer les actions menées et tirer des leçons",
+            "Interdire les retours d'expérience",
+            "Arrêter toute communication"
+        ],
+        answer: 1,
+        explanation: "L'évaluation permet d'améliorer la préparation et la gestion des crises futures."
+    },
+
+    // COMMUNICATION POLITIQUE : 5 QUESTIONS
+    {
+        category: "Communication politique",
+        question: "6. Qu'est-ce que la communication politique ?",
+        options: [
+            "La communication liée aux acteurs, idées et décisions politiques",
+            "La communication réservée aux magasins",
+            "La communication médicale uniquement",
+            "La communication entre deux amis"
+        ],
+        answer: 0,
+        explanation: "Elle concerne notamment les responsables politiques, les institutions et les citoyens."
+    },
+    {
+        category: "Communication politique",
+        question: "7. Quel est un objectif de la communication politique ?",
+        options: [
+            "Vendre uniquement des produits",
+            "Supprimer le débat public",
+            "Expliquer des décisions et défendre des idées politiques",
+            "Organiser des activités sportives"
+        ],
+        answer: 2,
+        explanation: "Elle permet de présenter des idées et d'expliquer les décisions publiques."
+    },
+    {
+        category: "Communication politique",
+        question: "8. Quel moyen un responsable politique peut-il utiliser pour s'adresser aux citoyens ?",
+        options: [
+            "Une facture privée",
+            "Un inventaire commercial",
+            "Un bulletin de stock",
+            "Un discours public ou une conférence de presse"
+        ],
+        answer: 3,
+        explanation: "Les discours et les conférences de presse permettent de transmettre des messages politiques."
+    },
+    {
+        category: "Communication politique",
+        question: "9. Quel rôle les médias jouent-ils dans la communication politique ?",
+        options: [
+            "Ils remplacent toutes les institutions",
+            "Ils diffusent et analysent des informations politiques",
+            "Ils prennent automatiquement toutes les décisions",
+            "Ils rédigent obligatoirement toutes les lois"
+        ],
+        answer: 1,
+        explanation: "Les médias informent le public et contribuent au débat politique."
+    },
+    {
+        category: "Communication politique",
+        question: "10. Que signifie la transparence en communication politique ?",
+        options: [
+            "Cacher les décisions importantes",
+            "Refuser toute question",
+            "Communiquer clairement sur les décisions et les informations pertinentes",
+            "Éviter de présenter des arguments"
+        ],
+        answer: 2,
+        explanation: "La transparence aide les citoyens à comprendre les décisions et à demander des comptes."
+    },
+
+    // COMMUNICATION ELECTORALE : 5 QUESTIONS
+    {
+        category: "Communication électorale",
+        question: "11. Qu'est-ce que la communication électorale ?",
+        options: [
+            "Une communication sur les urgences médicales",
+            "Une communication interne à une usine",
+            "Une communication consacrée aux loisirs",
+            "Une communication de campagne présentant les candidats et leurs programmes"
+        ],
+        answer: 3,
+        explanation: "Elle permet aux candidats et aux partis de présenter leurs propositions aux électeurs."
+    },
+    {
+        category: "Communication électorale",
+        question: "12. Quel est l'objectif d'une campagne électorale ?",
+        options: [
+            "Présenter un candidat et son programme pour convaincre les électeurs",
+            "Remplacer les institutions publiques",
+            "Éviter de présenter des propositions",
+            "Supprimer le débat démocratique"
+        ],
+        answer: 0,
+        explanation: "La campagne vise notamment à faire connaître les propositions et à obtenir le soutien des électeurs."
+    },
+    {
+        category: "Communication électorale",
+        question: "13. Quel support peut être utilisé pendant une campagne électorale ?",
+        options: [
+            "Une facture d'électricité",
+            "Une affiche électorale",
+            "Un dossier médical privé",
+            "Un inventaire de marchandises"
+        ],
+        answer: 1,
+        explanation: "L'affiche électorale est un support qui permet de présenter un candidat ou un message de campagne."
+    },
+    {
+        category: "Communication électorale",
+        question: "14. Qu'est-ce qu'un programme électoral ?",
+        options: [
+            "Une liste de publicités commerciales",
+            "Un compte rendu sportif",
+            "Un ensemble de propositions et d'engagements présentés aux électeurs",
+            "Un règlement intérieur d'entreprise"
+        ],
+        answer: 2,
+        explanation: "Le programme présente les priorités et les propositions du candidat ou du parti."
+    },
+    {
+        category: "Communication électorale",
+        question: "15. Pourquoi les débats entre candidats sont-ils utiles ?",
+        options: [
+            "Ils garantissent que toutes les promesses seront réalisées",
+            "Ils remplacent systématiquement le vote",
+            "Ils empêchent les électeurs de comparer les idées",
+            "Ils permettent de comparer les idées et les propositions"
+        ],
+        answer: 3,
+        explanation: "Les débats aident les électeurs à examiner les positions des différents candidats."
+    },
+
+    // COMMUNICATION DE MASSE : 5 QUESTIONS
+    {
+        category: "Communication de masse",
+        question: "16. Qu'est-ce que la communication de masse ?",
+        options: [
+            "La diffusion de messages à un public nombreux par des médias",
+            "Une conversation privée entre deux personnes",
+            "Une lettre adressée à un seul ami",
+            "Une réunion individuelle confidentielle"
+        ],
+        answer: 0,
+        explanation: "La communication de masse permet de diffuser un message à un large public."
+    },
+    {
+        category: "Communication de masse",
+        question: "17. Lequel est un média traditionnel de communication de masse ?",
+        options: [
+            "Une lettre personnelle",
+            "Une conversation privée",
+            "La télévision",
+            "Un entretien individuel"
+        ],
+        answer: 2,
+        explanation: "La télévision peut transmettre simultanément des informations à un grand nombre de personnes."
+    },
+    {
+        category: "Communication de masse",
+        question: "18. Quel est un avantage de la communication de masse ?",
+        options: [
+            "Garantir que tout le monde comprend exactement la même chose",
+            "Toucher rapidement un public très nombreux",
+            "Assurer une réponse individuelle à chacun",
+            "Éliminer toutes les erreurs"
+        ],
+        answer: 1,
+        explanation: "Elle permet de diffuser des messages à grande échelle."
+    },
+    {
+        category: "Communication de masse",
+        question: "19. Quel est un exemple de communication de masse ?",
+        options: [
+            "Une conversation entre deux étudiants",
+            "Un message privé envoyé à un ami",
+            "Une réunion individuelle",
+            "Un journal télévisé diffusé à un large public"
+        ],
+        answer: 3,
+        explanation: "Le journal télévisé diffuse des informations à un grand nombre de téléspectateurs."
+    },
+    {
+        category: "Communication de masse",
+        question: "20. Quel rôle la publicité joue-t-elle dans la communication de masse ?",
+        options: [
+            "Faire connaître un produit, un service ou une marque à un large public",
+            "Remplacer toutes les informations publiques",
+            "Garantir la réussite de chaque produit",
+            "Empêcher la diffusion des messages"
+        ],
+        answer: 0,
+        explanation: "La publicité utilise différents médias pour promouvoir des produits ou services auprès du public."
+    }
+];
+
+let current = 0;
+let answers = new Array(questions.length).fill(null);
+
+function calculateScore() {
+    return answers.reduce((total, answer, index) => {
+        return total +
+            (answer === questions[index].answer ? 1 : 0);
+    }, 0);
+}
+
+function startQuiz() {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("quizArea").style.display = "block";
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function renderQuestion() {
+    const q = questions[current];
+
+    document.getElementById("questionNumber").textContent =
+        `Question ${current + 1} / ${questions.length}`;
+
+    document.getElementById("currentScore").textContent =
+        `Score : ${calculateScore()}`;
+
+    document.getElementById("category").textContent = q.category;
+    document.getElementById("question").textContent = q.question;
+
+    document.getElementById("progress").style.width =
+        `${((current + 1) / questions.length) * 100}%`;
+
+    const optionsEl = document.getElementById("options");
+    const feedbackEl = document.getElementById("feedback");
+
+    optionsEl.innerHTML = "";
+    feedbackEl.className = "feedback";
+    feedbackEl.textContent = "";
+
+    q.options.forEach((option, index) => {
+        const btn = document.createElement("button");
+
+        btn.className = "option";
+        btn.type = "button";
+        btn.textContent =
+            `${String.fromCharCode(65 + index)}. ${option}`;
+
+        if (answers[current] !== null) {
+            btn.disabled = true;
+
+            if (index === q.answer) {
+                btn.classList.add("correct");
+            }
+
+            if (index === answers[current] &&
+                index !== q.answer) {
+                btn.classList.add("wrong");
+            }
+        } else {
+            btn.addEventListener("click", () => selectAnswer(index));
+        }
+
+        optionsEl.appendChild(btn);
+    });
+
+    if (answers[current] !== null) {
+        showFeedback();
+    }
+
+    document.getElementById("prevBtn").disabled = current === 0;
+    document.getElementById("nextBtn").disabled =
+        answers[current] === null;
+
+    document.getElementById("nextBtn").textContent =
+        current === questions.length - 1
+            ? "Voir le résultat"
+            : "Suivant →";
+}
+
+function selectAnswer(index) {
+    if (answers[current] !== null) return;
+
+    answers[current] = index;
+    renderQuestion();
+}
+
+function showFeedback() {
+    const q = questions[current];
+    const correct = answers[current] === q.answer;
+    const feedback = document.getElementById("feedback");
+
+    feedback.className =
+        "feedback show " + (correct ? "good" : "bad");
+
+    feedback.textContent =
+        (correct ? "Bonne réponse ! " : "Réponse incorrecte. ") +
+        q.explanation;
+}
+
+function nextQuestion() {
+    if (answers[current] === null) return;
+
+    if (current < questions.length - 1) {
+        current++;
+        renderQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function previousQuestion() {
+    if (current > 0) {
+        current--;
+        renderQuestion();
+    }
+}
+
+function showResults() {
+    const score = calculateScore();
+    const percentage = Math.round(score / questions.length * 100);
+
+    document.getElementById("quizArea").style.display = "none";
+    document.getElementById("result").style.display = "block";
+
+    document.getElementById("finalScore").textContent =
+        `${score} / ${questions.length}`;
+
+    document.getElementById("percentage").textContent =
+        `Pourcentage de réussite : ${percentage} %`;
+
+    let message;
+
+    if (percentage >= 90) {
+        message = "Excellent ! Tu maîtrises très bien les notions.";
+    } else if (percentage >= 70) {
+        message = "Très bien ! Tes connaissances sont solides.";
+    } else if (percentage >= 50) {
+        message = "Bien ! Continue à réviser les notions à améliorer.";
+    } else {
+        message = "Continue tes révisions et essaie à nouveau.";
+    }
+
+    document.getElementById("message").textContent = message;
+
+    const review = document.getElementById("reviewList");
+    review.innerHTML = "";
+
+    questions.forEach((q, index) => {
+        const item = document.createElement("div");
+        item.className = "review-item";
+
+        const title = document.createElement("strong");
+        title.textContent = `${index + 1}. ${q.category}`;
+
+        const question = document.createElement("p");
+        question.textContent = q.question;
+
+        const answer = document.createElement("p");
+        answer.textContent = "Bonne réponse : " + q.options[q.answer];
+
+        const explanation = document.createElement("p");
+        explanation.textContent = q.explanation;
+
+        const status = document.createElement("p");
+
+        if (answers[index] === q.answer) {
+            status.textContent = "✓ Ta réponse est correcte.";
+        } else if (answers[index] === null) {
+            status.textContent = "Question non répondue.";
+        } else {
+            status.textContent =
+                "✗ Ta réponse : " + q.options[answers[index]];
+        }
+
+        item.append(title, question, answer, explanation, status);
+        review.appendChild(item);
+    });
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function restartQuiz() {
+    current = 0;
+    answers = new Array(questions.length).fill(null);
+
+    document.getElementById("result").style.display = "none";
+    document.getElementById("intro").style.display = "block";
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+</script>
+<footer>MED AYOUB CHAABI-SIC1</footer>
+</body>
+</html>
